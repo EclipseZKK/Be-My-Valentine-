@@ -3,34 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Be My Valentine</title>
+    <title>Valentine's Interactive Page</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; }
-        .heart { animation: heartbeat 1s infinite; }
-        @keyframes heartbeat { 
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #ffe6e6;
+            overflow: hidden;
+        }
+        #teddy {
+            cursor: pointer;
+            width: 150px;
+            transition: transform 0.5s;
+        }
+        #question {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .button {
+            margin: 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #yes {
+            background-color: #ff66b3;
+            color: white;
+        }
+        #no {
+            background-color: #ff4d4d;
+            color: white;
+            position: relative;
+        }
+        .heart {
+            position: absolute;
+            color: red;
+            font-size: 24px;
+            animation: float 1s ease-in forwards;
+            opacity: 0;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Be My Valentine!</h1>
-    <div>
-        <span class="heart">🧸</span>
-        <span class="heart">👫</span>
+    <img id="teddy" src="path_to_teddy_bear_image.png" alt="Teddy Bear" onclick="showQuestion()">
+    <div id="question">
+        <p>Will you be my Valentine?</p>
+        <button id="yes" class="button" onclick="showHearts()">Yes</button>
+        <button id="no" class="button" onmouseover="runAway(this)">No</button>
     </div>
-    <p>Will you be my Valentine?</p>
-    <button id="yes">Yes</button>
-    <button id="no">No</button>
-    <audio id="sound" src="sound.mp3"></audio>
     <script>
-        document.getElementById('yes').onclick = function() {
-            document.getElementById('sound').play();
-            alert('Yay!');
-        };
-        document.getElementById('no').onclick = function() {
-            alert('Oh no!');
-        };
+        function showQuestion() {
+            document.getElementById('question').style.display = 'flex';
+        }
+
+        function showHearts() {
+            for (let i = 0; i < 10; i++) {
+                let heart = document.createElement('span');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => { heart.remove(); }, 2000);
+            }
+        }
+
+        function runAway(button) {
+            button.style.transform = 'translate(' + (Math.random() * 100 - 50) + 'px,' + (Math.random() * 100 - 50) + 'px)';
+        }
     </script>
 </body>
 </html>
