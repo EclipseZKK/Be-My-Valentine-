@@ -84,6 +84,12 @@ body {
   z-index: 1;
 }
 
+#videoContainer {
+  margin-top: 20px;
+  display: none;
+  z-index: 2;
+}
+
 @keyframes float {
   from {
     transform: translateY(0);
@@ -113,8 +119,8 @@ body {
   <button class="btn" id="no">No 😢</button>
 </div>
 
-<!-- Envelope and message -->
 <div id="envelope" class="envelope">📩</div>
+
 <div id="message" class="message">
   My love,<br><br>
   Kol yom ma3ak feels like a blessing I never want to take for granted. You walked into my life w hawalti ordinary moments to something magical. Your smile calms me, your voice grounds me, and your love gives me a strength I didn’t even know I had.<br><br>
@@ -126,8 +132,13 @@ body {
   Happy Valentine’s Day to my Partner forever.
 </div>
 
-<!-- Background music -->
-<audio id="music" src="https://www.bensound.com/bensound-music/bensound-romantic.mp3"></audio> <!-- Replace with A Thousand Years -->
+<!-- YouTube Video Container -->
+<div id="videoContainer">
+  <iframe id="video" width="560" height="315"
+  src="https://www.youtube.com/embed/LH1B-F6nUig?autoplay=1&rel=0&modestbranding=1"
+  title="A Thousand Years - Christina Perri" frameborder="0"
+  allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
 
 <script>
 const teddy = document.getElementById("teddy");
@@ -136,7 +147,7 @@ const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
 const envelope = document.getElementById("envelope");
 const message = document.getElementById("message");
-const music = document.getElementById("music");
+const videoContainer = document.getElementById("videoContainer");
 
 // Show question when teddy clicked
 teddy.addEventListener("click", () => {
@@ -156,8 +167,6 @@ noBtn.addEventListener("mouseover", () => {
 // Yes click
 yesBtn.addEventListener("click", () => {
   question.style.display = "none";
-
-  // Show envelope
   envelope.style.opacity = "1";
   envelope.style.transform = "scale(1)";
 
@@ -166,7 +175,7 @@ yesBtn.addEventListener("click", () => {
     envelope.style.animation = "openEnvelope 1s forwards";
     setTimeout(() => {
       message.style.display = "block";
-      music.play();
+      videoContainer.style.display = "block"; // Show YouTube video
     }, 1000);
     envelope.removeEventListener("click", open);
   });
