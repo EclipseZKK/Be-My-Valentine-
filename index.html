@@ -113,6 +113,15 @@ body {
   50% { transform: scale(1.2) rotateX(90deg); }
   100% { transform: scale(1.2) rotateX(0deg); }
 }
+
+/* Responsive text and elements for small screens */
+@media (max-width: 480px) {
+  #teddy { font-size: 80px; }
+  .envelope { font-size: 60px; }
+  .btn { font-size: 14px; padding: 10px 16px; }
+  .message { font-size: 16px; max-height: 50vh; }
+  #videoContainer iframe { height: 200px; }
+}
 </style>
 </head>
 
@@ -149,11 +158,11 @@ body {
 <!-- YouTube Video Container -->
 <div id="videoContainer">
   <iframe id="video"
-  src="https://www.youtube.com/embed/KHy9mLJ7enk?autoplay=1&rel=0&modestbranding=1"
-  title="Once in a Lifetime - YouTube"
-  frameborder="0"
-  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
-  allowfullscreen>
+    src="https://www.youtube.com/embed/rtOvBOTyX00?autoplay=1&rel=0&modestbranding=1&mute=1"
+    title="A Thousand Years - Christina Perri"
+    frameborder="0"
+    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
   </iframe>
 </div>
 
@@ -192,7 +201,7 @@ yesBtn.addEventListener("click", () => {
     envelope.style.animation = "openEnvelope 1s forwards";
     setTimeout(() => {
       message.style.display = "block";
-      videoContainer.style.display = "block"; // Show embedded video
+      videoContainer.style.display = "block"; // Show YouTube video
     }, 1000);
     envelope.removeEventListener("click", open);
   });
