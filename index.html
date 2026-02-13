@@ -7,68 +7,95 @@
 
 <style>
 body {
-  margin: 0;
-  height: 100vh;
-  background: #ffe6eb;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
-  text-align: center;
+margin: 0;
+height: 100vh;
+background: #ffe6eb;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+font-family: Arial, sans-serif;
+overflow: hidden;
+text-align: center;
 }
 
 #teddy {
-  font-size: 120px;
-  cursor: pointer;
-  transition: transform 0.3s;
+font-size: 120px;
+cursor: pointer;
+transition: transform 0.3s;
 }
 
 #teddy:hover {
-  transform: scale(1.1);
+transform: scale(1.1);
 }
 
 #question {
-  display: none;
-  color: #d6336c;
-  font-size: 26px;
+display: none;
+color: #d6336c;
+font-size: 26px;
 }
 
 .btn {
-  padding: 12px 24px;
-  margin: 20px;
-  font-size: 18px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
+padding: 12px 24px;
+margin: 20px;
+font-size: 18px;
+border: none;
+border-radius: 10px;
+cursor: pointer;
 }
 
 #yes {
-  background: #ff4d6d;
-  color: white;
+background: #ff4d6d;
+color: white;
 }
 
 #no {
-  background: #ccc;
-  position: absolute;
+background: #ccc;
+position: absolute;
+}
+
+.envelope {
+font-size: 100px;
+cursor: pointer;
+transition: transform 0.5s;
+opacity: 0;
+}
+
+.envelope:hover {
+transform: scale(1.1);
+}
+
+.message {
+font-size: 24px;
+color: #d6336c;
+margin-top: 20px;
+display: none;
+position: relative;
+z-index: 2;
 }
 
 .heart {
-  position: absolute;
-  font-size: 24px;
-  animation: float 3s linear forwards;
+position: absolute;
+font-size: 24px;
+animation: float 3s linear forwards;
+z-index: 1;
 }
 
 @keyframes float {
-  from {
-    transform: translateY(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-250px);
-    opacity: 0;
-  }
+from {
+transform: translateY(0);
+opacity: 1;
+}
+to {
+transform: translateY(-250px);
+opacity: 0;
+}
+}
+
+@keyframes openEnvelope {
+0% { transform: scale(1) rotateX(0deg); }
+50% { transform: scale(1.2) rotateX(90deg); }
+100% { transform: scale(1.2) rotateX(0deg); }
 }
 </style>
 </head>
@@ -78,9 +105,17 @@ body {
 <div id="teddy">🧸❤️</div>
 
 <div id="question">
-  <p>Will you be my Valentine? 💕</p>
-  <button class="btn" id="yes">Yes ❤️</button>
-  <button class="btn" id="no">No 😢</button>
+<p>Will you be my Valentine? 💕</p>
+<button class="btn" id="yes">Yes ❤️</button>
+<button class="btn" id="no">No 😢</button>
+</div>
+
+<!-- Envelope and message -->
+<div id="envelope" class="envelope">📩</div>
+<div id="message" class="message">
+Hay Sarah, <br>
+Ba7ebik aktar men el kelam yi2dar ye2ool 😘<br>
+Enti 7ayati w kol yom ma3ik 7elwa ❤️
 </div>
 
 <script>
@@ -88,34 +123,51 @@ const teddy = document.getElementById("teddy");
 const question = document.getElementById("question");
 const noBtn = document.getElementById("no");
 const yesBtn = document.getElementById("yes");
+const envelope = document.getElementById("envelope");
+const message = document.getElementById("message");
 
 // Show question
 teddy.addEventListener("click", () => {
-  teddy.style.display = "none";
-  question.style.display = "block";
+teddy.style.display = "none";
+question.style.display = "block";
 });
 
-// No button escapes
+// No button dodges
 noBtn.addEventListener("mouseover", () => {
-  const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-  const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-  noBtn.style.left = x + "px";
-  noBtn.style.top = y + "px";
+const padding = 20;
+const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - padding*2) + padding;
+const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - padding*2) + padding;
+noBtn.style.left = x + "px";
+noBtn.style.top = y + "px";
 });
 
 // Yes click
 yesBtn.addEventListener("click", () => {
-  question.innerHTML = "<h2>I knew you’d say YES 💖</h2>";
+question.style.display = "none";
 
-  setInterval(() => {
-    const heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerText = "❤️";
-    heart.style.left = Math.random() * window.innerWidth + "px";
-    heart.style.bottom = "0px";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 3000);
-  }, 250);
+// Show envelope
+envelope.style.opacity = "1";
+envelope.style.transform = "scale(1)";
+
+// Envelope click animation
+envelope.addEventListener("click", function open() {
+envelope.style.animation = "openEnvelope 1s forwards";
+setTimeout(() => {
+message.style.display = "block";
+}, 1000);
+envelope.removeEventListener("click", open);
+});
+
+// Floating hearts
+setInterval(() => {
+const heart = document.createElement("div");
+heart.className = "heart";
+heart.innerText = "❤️";
+heart.style.left = Math.random() * window.innerWidth + "px";
+heart.style.bottom = "0px";
+document.body.appendChild(heart);
+setTimeout(() => heart.remove(), 3000);
+}, 250);
 });
 </script>
 
